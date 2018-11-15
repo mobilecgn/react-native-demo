@@ -3,13 +3,18 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "start": "node node_modules/react-native/local-cli/cli.js start --reset-cache --verbose",
     "test": "jest",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios"
   },
   "dependencies": {
     "react": "16.6.1",
     "react-native": "0.57.5",
+    "react-native-gesture-handler": "^1.0.9",
+    "react-native-keyboard-aware-scroll-view": "^0.7.4",
+    "react-native-screens": "^1.0.0-alpha.16",
     "react-navigation": "^3.0.0-rc.5",
     "react-navigation-stack": "^1.0.0-alpha.34"
   },
@@ -17,6 +22,7 @@
     "@types/jest": "^23.3.9",
     "@types/react": "^16.7.6",
     "@types/react-native": "^0.57.9",
+    "@types/react-navigation": "^2.13.1",
     "@types/react-test-renderer": "^16.0.3",
     "babel-jest": "23.6.0",
     "jest": "23.6.0",
