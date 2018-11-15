@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { Button, Text, StyleSheet, TextInput, Image, View } from 'react-native'
 import { NavigationStackScreenOptions } from 'react-navigation';
-import { KeyboardAwareScrollView as ScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
+import assets from './assets';
 
 interface Props {
 }
@@ -9,10 +11,6 @@ interface Props {
 interface State {
   username: string
   password: string
-}
-
-const images = {
-  logo: require('./mobilecgn_logo.png')
 }
 
 const styles = StyleSheet.create({
@@ -46,10 +44,10 @@ export default class LoginScreen extends Component<Props, State> {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.contentContainer}>
+      <KeyboardAwareScrollView contentContainerStyle={styles.contentContainer}>
 
         <View style={styles.logoContainer}>
-          <Image source={images.logo} />
+          <Image source={assets.logo} />
         </View>
 
         <Text style={styles.label}>Username:</Text>
@@ -60,7 +58,7 @@ export default class LoginScreen extends Component<Props, State> {
         <View style={styles.buttonContainer}>
           <Button title="Login" color="#e01f1f" onPress={() => {}} />
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     )
   }
 }
