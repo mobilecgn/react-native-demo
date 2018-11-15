@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, TextInput, View, Alert, TouchableHighlight, TouchableOpacity, Image } from 'react-native'
-import { NavigationStackScreenOptions } from 'react-navigation';
+import { StyleSheet, Text, TextInput, View, Alert, TouchableOpacity, Image } from 'react-native'
+import { NavigationStackScreenOptions, NavigationScreenProp } from 'react-navigation';
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 import unsplash, { Photo, SearchResult } from './api/unsplash';
 
 interface Props {
+  navigation: NavigationScreenProp<any>
 }
 
 interface State {
@@ -15,9 +16,10 @@ interface State {
 const styles = StyleSheet.create({
   textInput: {
     backgroundColor: '#f0f0f0',
-    borderBottomWidth: 2,
-    borderBottomColor: 'gray',
+    borderRadius: 10,
     minHeight: 40,
+    margin: 10,
+    padding: 10,
   },
 })
 
@@ -45,6 +47,11 @@ export default class ImageSearch extends Component<Props, State> {
     console.log('searchInput', searchInput)
     this.setState({
       searchInput,
+      searchResult: !searchInput ? {
+        total: 0,
+        total_pages: 0,
+        results: [],
+      } : this.state.searchResult,
     })
     // We do not trigger the search here, because unsplash accepts only 50 req/hour!
   }
@@ -73,12 +80,16 @@ export default class ImageSearch extends Component<Props, State> {
     }
   }
 
-  renderItem = ({ item }: { item: Photo }) => {
-    const uri = item.urls.thumb
-    const aspectRatio = item.width / item.height
+  renderItem = ({ item: photo }: { item: Photo }) => {
+    const uri = photo.urls.thumb
+    const aspectRatio = photo.width / photo.height
+
+    const onPress = () => {
+      this.props.navigation.navigate('ImageDetail', { photo })
+    }
 
     return (
-      <TouchableOpacity style={{ marginTop: 5, marginHorizontal: 5 }}>
+      <TouchableOpacity onPress={onPress} style={{ marginTop: 5, marginHorizontal: 5 }}>
         <Image source={{ uri }} resizeMode="cover" style={{ aspectRatio }} />
       </TouchableOpacity>
     )
@@ -89,6 +100,7 @@ export default class ImageSearch extends Component<Props, State> {
       <View style={{ flex: 1, marginBottom: 5 }}>
         <TextInput
           keyboardType="web-search"
+          clearButtonMode="always"
           returnKeyType="search"
           value={this.state.searchInput}
           onChangeText={this.onInputChange}
@@ -96,7 +108,7 @@ export default class ImageSearch extends Component<Props, State> {
           style={styles.textInput}
         />
 
-        <Text>Show {this.state.searchResult.results.length} of {this.state.searchResult.total} images</Text>
+        {/*<Text>Show {this.state.searchResult.results.length} of {this.state.searchResult.total} images</Text>*/}
 
         <KeyboardAwareFlatList
           data={this.state.searchResult.results}

@@ -6,6 +6,7 @@ import {
 
 import LoginScreen from './LoginScreen_v2'
 import ImageSearch from './ImageSearch'
+import ImageDetail from './ImageDetail'
 
 export const AuthStack = createStackNavigator({
   LoginScreen,
@@ -13,6 +14,7 @@ export const AuthStack = createStackNavigator({
 
 export const NavigationStack = createStackNavigator({
   ImageSearch,
+  ImageDetail,
 })
 
 export const AuthSwitch = createSwitchNavigator({
