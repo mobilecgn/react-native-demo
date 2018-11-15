@@ -54,6 +54,13 @@ export default class LoginScreen extends Component<Props, State> {
   usernameTextInput: TextInput|null = null
   passwordTextInput: TextInput|null = null
 
+  async componentDidMount() {
+    const username = await AsyncStorage.getItem('username')
+    if (username) {
+      this.setState({ username })
+    }
+  }
+
   login = async () => {
     if (!this.state.username) {
       Alert.alert('Missing username')
@@ -85,6 +92,7 @@ export default class LoginScreen extends Component<Props, State> {
           editable={!this.state.inProgress}
           keyboardType="email-address"
           returnKeyType="next"
+          value={this.state.username}
           onChangeText={(value) => this.setState({ username: value })}
           onSubmitEditing={() => this.passwordTextInput && this.passwordTextInput.focus()}
           style={styles.textInput}
@@ -96,6 +104,7 @@ export default class LoginScreen extends Component<Props, State> {
           editable={!this.state.inProgress}
           secureTextEntry
           returnKeyType="send"
+          value={this.state.password}
           onChangeText={(value) => this.setState({ password: value })}
           onSubmitEditing={this.login}
           style={styles.textInput}
