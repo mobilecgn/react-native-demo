@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, TextInput, View, Alert, TouchableOpacity, Image } from 'react-native'
-import { NavigationStackScreenOptions, NavigationScreenProp } from 'react-navigation';
+import { NavigationScreenProp } from 'react-navigation';
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 import unsplash, { Photo, SearchResult } from './api/unsplash';
 
@@ -24,8 +24,18 @@ const styles = StyleSheet.create({
 })
 
 export default class ImageSearch extends Component<Props, State> {
-  static navigationOptions: NavigationStackScreenOptions = {
-    title: 'Search',
+  static navigationOptions = ({ navigation }: { navigation: NavigationScreenProp<any> }) => {
+    const logout = () => {
+      navigation.navigate('LoggedOut')
+    }
+    return {
+      title: 'Search',
+      headerRight: (
+        <TouchableOpacity onPress={logout} style={{ marginRight: 10 }}>
+          <Text style={{ color: '#e01f1f' }}>Logout</Text>
+        </TouchableOpacity>
+      ),
+    }
   }
 
   state = {
