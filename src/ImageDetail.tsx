@@ -1,19 +1,13 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
-import { NavigationStackScreenOptions, NavigationScreenProp } from 'react-navigation';
+import { Text, View, Image } from 'react-native'
+import { NavigationScreenProp } from 'react-navigation';
 import { Photo } from './api/unsplash';
 
 interface Props {
   navigation: NavigationScreenProp<any>
 }
 
-interface State {
-}
-
-const styles = StyleSheet.create({
-})
-
-export default class ImageSearch extends Component<Props, State> {
+export default class ImageSearch extends Component<Props> {
   static navigationOptions = ({ navigation }: { navigation: NavigationScreenProp<any> }) => {
     const photo: Photo = navigation.getParam('photo')
     return {
